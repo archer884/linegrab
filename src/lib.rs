@@ -11,7 +11,12 @@ pub fn linegrab<T>(optional: Option<String>, fallback: T) -> Box<Iterator<Item=S
 {
     // I prefer to use box syntax for this kind of thing, but I want this usable on stable
     match optional.and_then(|path| File::open(&path).ok()) {
-        None => Box::new(BufReader::new(fallback).lines().filter_map(|line| line.ok())),
-        Some(reader) => Box::new(BufReader::new(reader).lines().filter_map(|line| line.ok())),
+        None => Box::new(
+            BufReader::new(fallback).lines().filter_map(|line| line.ok())
+        ),
+        
+        Some(reader) => Box::new(
+            BufReader::new(reader).lines().filter_map(|line| line.ok())
+        ),
     }
 }
